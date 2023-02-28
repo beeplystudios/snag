@@ -7,6 +7,7 @@ interface ITab {
   name: string;
   href: string;
 }
+
 const Navbar: React.FC = () => {
   const { data: sessionData } = useSession();
 
@@ -15,6 +16,11 @@ const Navbar: React.FC = () => {
       name: "My Profile",
       href: sessionData?.user.slug ? `/profile/${sessionData?.user.slug}` : "/",
     },
+    {
+      // TODO: better name
+      name: "All Goals",
+      href: "/all",
+    },
   ];
 
   return (
@@ -22,9 +28,11 @@ const Navbar: React.FC = () => {
       <Link href="/">
         <Image src="/white-logo.svg" alt="" width={30} height={10} />
       </Link>
+
       {mainTabs.map((tab, i) => (
         <Tab key={i} {...tab} />
       ))}
+
       <button
         className="text-highlight no-underline transition hover:-translate-y-0.5"
         onClick={

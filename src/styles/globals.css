@@ -9,3 +9,7 @@
 body {
   @apply bg-bg-100;
 }
+
+hr {
+  @apply my-2 border-0 border-b-2 border-bg-200;
+}

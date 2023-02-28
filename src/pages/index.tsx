@@ -7,7 +7,7 @@ import { type NextPage } from "next";
 import { signIn, useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
-  const { status } = useSession();
+  const { status, data: session } = useSession();
   const goalsQuery = api.goal.getMine.useQuery(undefined, {
     enabled: status === "authenticated",
   });
@@ -28,6 +28,8 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <h1>My Goals</h1>
+
+      <p>Points: {session.user.points}</p>
 
       <CreateGoal />
 

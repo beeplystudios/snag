@@ -1,11 +1,15 @@
-import { api } from "@/utils/api";
-import { Goal } from "@prisma/client";
+import { api, type RouterOutputs } from "@/utils/api";
+import clsx from "clsx";
 import { useState } from "react";
 
-const Goal: React.FC<{ goal: Goal; changable?: boolean }> = ({
-  goal,
-  changable = true,
-}) => {
+type GoalWithMessages = RouterOutputs["goal"]["getMine"] extends (infer T)[]
+  ? T
+  : never;
+
+const Goal: React.FC<{
+  goal: GoalWithMessages;
+  changable?: boolean;
+}> = ({ goal, changable = true }) => {
   const [checked, setChecked] = useState(goal.completedAt !== null);
   const context = api.useContext();
   const onComplete = api.goal.complete.useMutation({
@@ -30,6 +34,18 @@ const Goal: React.FC<{ goal: Goal; changable?: boolean }> = ({
       <div className="flex flex-1 flex-col items-start">
         <h3 className="text-lg font-bold">{goal.content}</h3>
         <p className="text-white/80">{goal.description ?? <br />}</p>
+
+        <p className="mt-2">Motivating messages down here</p>
+
+        <div>
+          {goal.messages.length === 0 && <p>None!</p>}
+          {goal.messages.map((message) => (
+            <p key={message.id}>
+              {message.sender.name} said: {message.message}, given:{" "}
+              {message.points}pts
+            </p>
+          ))}
+        </div>
       </div>
       <label>
         <input
@@ -39,6 +55,7 @@ const Goal: React.FC<{ goal: Goal; changable?: boolean }> = ({
           onChange={(e) => {
             if (!changable) return;
             setChecked(e.target.checked);
+
             if (e.target.checked) {
               void onComplete.mutateAsync({
                 id: goal.id,
@@ -54,9 +71,10 @@ const Goal: React.FC<{ goal: Goal; changable?: boolean }> = ({
           className="peer absolute opacity-0"
         />
         <div
-          className={`h-10 w-10  rounded border-2 ${
+          className={clsx(
+            "h-10 w-10 cursor-pointer rounded border-2",
             checked ? "border-green-500 bg-green-500" : "border-rose-400 "
-          }`}
+          )}
         />
       </label>
     </div>

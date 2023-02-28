@@ -1,4 +1,4 @@
-import { createGoalSchema } from "@/shared/schemas";
+import { createGoalSchema, sendMotivationSchema } from "@/shared/schemas";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
@@ -7,6 +7,7 @@ export const goalRouter = createTRPCRouter({
   getAll: protectedProcedure
     .input(
       z.object({
+        notBy: z.string().optional(),
         cursor: z.string().optional(),
       })
     )
@@ -15,6 +16,11 @@ export const goalRouter = createTRPCRouter({
 
       const goals = await ctx.prisma.goal.findMany({
         cursor: input.cursor ? { id: input.cursor } : undefined,
+        where: {
+          authorId: {
+            not: input.notBy ? input.notBy : undefined,
+          },
+        },
         include: {
           author: {
             select: {
@@ -38,6 +44,20 @@ export const goalRouter = createTRPCRouter({
   getMine: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.goal.findMany({
       where: { authorId: ctx.session.user.id },
+      include: {
+        messages: {
+          take: 4,
+          include: {
+            sender: {
+              select: {
+                image: true,
+                name: true,
+                slug: true,
+              },
+            },
+          },
+        },
+      },
     });
   }),
 
@@ -46,6 +66,15 @@ export const goalRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.goal.findMany({
         where: { author: { slug: input.slug } },
+        include: {
+          author: {
+            select: {
+              image: true,
+              name: true,
+              slug: true,
+            },
+          },
+        },
       });
     }),
 
@@ -106,10 +135,8 @@ export const goalRouter = createTRPCRouter({
 
   motivate: protectedProcedure
     .input(
-      z.object({
+      sendMotivationSchema.extend({
         goalId: z.string(),
-        message: z.string(),
-        points: z.number().min(1).max(100),
       })
     )
     .mutation(async ({ ctx, input }) => {

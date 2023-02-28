@@ -32,7 +32,7 @@ export const NumberInput = ({
           "focus:ring",
           className
         )}
-        value={field.value ? field.value : ""}
+        value={field.value ? field.value : "0"}
         onChange={(e) => {
           if (!isNaN(parseInt(e.target.value)))
             field.onChange(parseInt(e.target.value));
