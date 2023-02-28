@@ -1,4 +1,5 @@
 import { CreateGoal } from "@/components/goals/create";
+import Goal from "@/components/goals/goal";
 import Layout from "@/components/shared/layout";
 import { api } from "@/utils/api";
 import { type NextPage } from "next";
@@ -10,12 +11,8 @@ const Home: NextPage = () => {
     <Layout>
       <CreateGoal />
 
-      {goalsQuery.data?.map((goal) => (
-        <div key={goal.id}>
-          <h1>content: {goal.content}</h1>
-          <p>description: {goal.description}</p>
-          <p>frequency: {goal.frequency}</p>
-        </div>
+      {goalsQuery.data?.map((goal, i) => (
+        <Goal goal={goal} key={i} />
       ))}
     </Layout>
   );

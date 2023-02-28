@@ -60,6 +60,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     goals         Goal[]
+    points        Int       @default(500)
 }
 
 model VerificationToken {
