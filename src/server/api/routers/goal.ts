@@ -3,7 +3,7 @@ import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { z } from "zod";
 
 export const goalRouter = createTRPCRouter({
-  getMine: protectedProcedure.query(async ({ ctx, input }) => {
+  getMine: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.goal.findMany({
       where: { authorId: ctx.session.user.id },
     });
@@ -35,7 +35,7 @@ export const goalRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.$transaction([
         ctx.prisma.goal.update({
-          where: { id: input.id },
+          where: { id: input.id, authorId: ctx.session.user.id },
           data: {
             completedAt: new Date(),
           },
@@ -54,7 +54,7 @@ export const goalRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.$transaction([
         ctx.prisma.goal.update({
-          where: { id: input.id },
+          where: { id: input.id, authorId: ctx.session.user.id },
           data: {
             completedAt: null,
           },

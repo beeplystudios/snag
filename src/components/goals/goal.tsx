@@ -7,8 +7,17 @@ const Goal: React.FC<{ goal: Goal; changable?: boolean }> = ({
   changable = true,
 }) => {
   const [checked, setChecked] = useState(goal.completedAt !== null);
-  const onComplete = api.goal.complete.useMutation();
-  const onUnComplete = api.goal.uncomplete.useMutation();
+  const context = api.useContext();
+  const onComplete = api.goal.complete.useMutation({
+    onSuccess() {
+      context.invalidate().catch((e) => console.error(e));
+    },
+  });
+  const onUnComplete = api.goal.uncomplete.useMutation({
+    onSuccess() {
+      context.invalidate().catch((e) => console.error(e));
+    },
+  });
 
   return (
     <div

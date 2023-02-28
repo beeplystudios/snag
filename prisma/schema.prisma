@@ -10,7 +10,7 @@ datasource db {
 
 model Goal {
   id       String @id @default(cuid())
-  authorId String
+  authorId String @unique
   author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   content     String
