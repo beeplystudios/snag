@@ -10,7 +10,7 @@ const ProfilePage: React.FC = () => {
 
   return (
     <Layout title={user?.name ?? ""}>
-      <h1 className="w-full text-left ">{user?.name}</h1>
+      <h1 className="w-full text-left">{user?.name}</h1>
     </Layout>
   );
 };

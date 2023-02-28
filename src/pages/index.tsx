@@ -9,6 +9,8 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
+      <h1>My Goals</h1>
+
       <CreateGoal />
 
       {goalsQuery.data?.map((goal, i) => (
