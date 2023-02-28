@@ -35,13 +35,15 @@ export const goalRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.$transaction([
         ctx.prisma.goal.update({
-          where: { id: input.id },
+          where: {
+            id_authorId: { id: input.id, authorId: ctx.session.user.id },
+          },
           data: {
             completedAt: new Date(),
           },
         }),
         ctx.prisma.user.update({
-          where: { id: input.userId },
+          where: { id: ctx.session.user.id },
           data: {
             points: { increment: 1 },
           },
@@ -54,13 +56,15 @@ export const goalRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.$transaction([
         ctx.prisma.goal.update({
-          where: { id: input.id },
+          where: {
+            id_authorId: { id: input.id, authorId: ctx.session.user.id },
+          },
           data: {
             completedAt: null,
           },
         }),
         ctx.prisma.user.update({
-          where: { id: input.userId },
+          where: { id: ctx.session.user.id },
           data: {
             points: { decrement: 1 },
           },

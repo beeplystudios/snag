@@ -29,7 +29,7 @@ const Goal: React.FC<{ goal: Goal; changable?: boolean }> = ({
     >
       <div className="flex flex-1 flex-col items-start">
         <h3 className="text-lg font-bold">{goal.content}</h3>
-        <p className="text-white/80">{goal.description}</p>
+        <p className="text-white/80">{goal.description ?? <br />}</p>
       </div>
       <label>
         <input
