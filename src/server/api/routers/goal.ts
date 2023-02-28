@@ -1,5 +1,5 @@
 import { createGoalSchema } from "@/shared/schemas";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { z } from "zod";
 
 export const goalRouter = createTRPCRouter({
@@ -8,6 +8,14 @@ export const goalRouter = createTRPCRouter({
       where: { authorId: ctx.session.user.id },
     });
   }),
+
+  getFromSlug: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.goal.findMany({
+        where: { author: { slug: input.slug } },
+      });
+    }),
 
   create: protectedProcedure
     .input(createGoalSchema)
