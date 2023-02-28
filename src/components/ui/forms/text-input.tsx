@@ -23,7 +23,7 @@ export const TextInput = ({
       <label htmlFor={name}>{label}</label>
       <input
         id={name}
-        className={`bg-bg-300 w-full rounded-lg px-3 py-[10px] outline-none ${
+        className={`w-full rounded-lg bg-bg-300 px-3 py-[10px] outline-none ${
           className ?? ""
         }`}
         value={field.value ? field.value : ""}
