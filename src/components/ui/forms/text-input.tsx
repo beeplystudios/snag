@@ -5,6 +5,7 @@ interface TextInputProps {
   label: string;
   placeholder?: string;
   description?: string;
+  className?: string;
 }
 
 // if you put React.FC here it will break!
@@ -13,6 +14,7 @@ export const TextInput = ({
   label,
   placeholder,
   description,
+  className,
 }: TextInputProps) => {
   const { field, error } = useTsController<string>();
 
@@ -21,7 +23,9 @@ export const TextInput = ({
       <label htmlFor={name}>{label}</label>
       <input
         id={name}
-        className="border border-slate-400"
+        className={`bg-bg-300 w-full rounded-lg px-3 py-[10px] outline-none ${
+          className ?? ""
+        }`}
         value={field.value ? field.value : ""}
         onChange={(e) => {
           field.onChange(e.target.value);

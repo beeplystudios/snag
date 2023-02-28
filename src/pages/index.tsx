@@ -1,15 +1,13 @@
 import { CreateGoal } from "@/components/goals/create";
+import Layout from "@/components/shared/layout";
 import { api } from "@/utils/api";
 import { type NextPage } from "next";
-import { signIn } from "next-auth/react";
 
 const Home: NextPage = () => {
   const goalsQuery = api.goal.getMine.useQuery();
 
   return (
-    <div>
-      <button onClick={() => signIn("google")}>Sign in</button>
-
+    <Layout>
       <CreateGoal />
 
       {goalsQuery.data?.map((goal) => (
@@ -19,7 +17,7 @@ const Home: NextPage = () => {
           <p>frequency: {goal.frequency}</p>
         </div>
       ))}
-    </div>
+    </Layout>
   );
 };
 

@@ -3,6 +3,7 @@ import { api } from "@/utils/api";
 import { useCallback } from "react";
 import type { z } from "zod";
 import { TsForm } from "../ui/forms/ts-form";
+import Button from "../ui/button";
 
 export const CreateGoal: React.FC = () => {
   const createGoal = api.goal.create.useMutation();
@@ -19,6 +20,7 @@ export const CreateGoal: React.FC = () => {
   return (
     <TsForm
       schema={createGoalSchema}
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       onSubmit={onSubmit}
       formProps={{
         className: "flex flex-col w-96 gap-4",
@@ -36,7 +38,7 @@ export const CreateGoal: React.FC = () => {
           description: "What are you doing in this goal?",
         },
       }}
-      renderAfter={() => <button type="submit">Create Goal</button>}
+      renderAfter={() => <Button type="submit">Create Goal</Button>}
     />
   );
 };

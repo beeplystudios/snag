@@ -5,6 +5,7 @@ interface NumberInputProps {
   label: string;
   placeholder?: string;
   description?: string;
+  className?: string;
 }
 
 // if you put React.FC here it will break!
@@ -13,6 +14,7 @@ export const NumberInput = ({
   label,
   placeholder,
   description,
+  className,
 }: NumberInputProps) => {
   const { field, error } = useTsController<number>();
 
@@ -22,7 +24,9 @@ export const NumberInput = ({
       <input
         id={name}
         type="number"
-        className="border border-slate-400"
+        className={`w-full rounded-lg bg-bg-300 px-3 py-[10px] outline-none ${
+          className ?? ""
+        }`}
         value={field.value ? field.value : ""}
         onChange={(e) => {
           field.onChange(parseInt(e.target.value));
