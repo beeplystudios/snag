@@ -3,7 +3,38 @@ import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { z } from "zod";
 
 export const goalRouter = createTRPCRouter({
-  getMine: protectedProcedure.query(async ({ ctx, input }) => {
+  getAll: protectedProcedure
+    .input(
+      z.object({
+        cursor: z.string().optional(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const TAKE = 20;
+
+      const goals = await ctx.prisma.goal.findMany({
+        cursor: input.cursor ? { id: input.cursor } : undefined,
+        include: {
+          author: {
+            select: {
+              image: true,
+              name: true,
+              slug: true,
+            },
+          },
+        },
+        take: TAKE + 1,
+      });
+
+      const nextCursor = (goals.length > TAKE ? goals[TAKE]?.id : null) || null;
+
+      return {
+        goals,
+        nextCursor,
+      };
+    }),
+
+  getMine: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.goal.findMany({
       where: { authorId: ctx.session.user.id },
     });
