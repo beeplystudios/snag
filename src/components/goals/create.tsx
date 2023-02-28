@@ -51,6 +51,7 @@ export const CreateGoal: React.FC = () => {
           props={{
             content: {
               label: "Content",
+              description: "What is the goal?",
             },
             frequency: {
               label: "Frequency",
@@ -59,7 +60,7 @@ export const CreateGoal: React.FC = () => {
             },
             description: {
               label: "Description",
-              description: "What are you doing in this goal?",
+              description: "How do you achieve this goal?",
             },
           }}
           renderAfter={() => (
