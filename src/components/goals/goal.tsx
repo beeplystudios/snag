@@ -2,8 +2,11 @@ import { api } from "@/utils/api";
 import { Goal } from "@prisma/client";
 import { useState } from "react";
 
-const Goal: React.FC<{ goal: Goal }> = ({ goal }) => {
-  const [checked, setChecked] = useState(false);
+const Goal: React.FC<{ goal: Goal; changable?: boolean }> = ({
+  goal,
+  changable = true,
+}) => {
+  const [checked, setChecked] = useState(goal.completedAt !== null);
   const onComplete = api.goal.complete.useMutation();
   const onUnComplete = api.goal.uncomplete.useMutation();
 
@@ -23,7 +26,9 @@ const Goal: React.FC<{ goal: Goal }> = ({ goal }) => {
         <input
           type="checkbox"
           name={`goalbox-${goal.id}`}
+          checked={checked}
           onChange={(e) => {
+            if (!changable) return;
             setChecked(e.target.checked);
             if (e.target.checked) {
               void onComplete.mutateAsync({

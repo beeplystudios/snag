@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import Layout from "@/components/shared/layout";
 import { api } from "@/utils/api";
+import Goal from "@/components/goals/goal";
 
 const ProfilePage: React.FC = () => {
   const router = useRouter();
@@ -11,11 +12,13 @@ const ProfilePage: React.FC = () => {
 
   return (
     <Layout title={user?.name ?? ""}>
-      <h1 className="w-full text-left text-center">{user?.name}</h1>
+      <h1 className="my-4 w-full text-center text-3xl font-bold">
+        {user?.name}
+      </h1>
 
-      {userGoalsQuery.data?.map((e) => 
-        <div>{e.content}</div>
-      )}
+      {userGoalsQuery.data?.map((goal, i) => (
+        <Goal goal={goal} key={i} changable={false} />
+      ))}
     </Layout>
   );
 };
