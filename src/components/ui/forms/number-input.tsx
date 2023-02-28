@@ -20,11 +20,13 @@ export const NumberInput = ({
 
   return (
     <div>
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name} className="font-[500]">
+        {label}
+      </label>
       <input
         id={name}
         type="number"
-        className={`w-full rounded-lg bg-bg-300 px-3 py-[10px] outline-none ${
+        className={`w-full rounded-lg bg-bg-100 px-3 py-[10px] outline-none ${
           className ?? ""
         }`}
         value={field.value ? field.value : ""}
@@ -33,7 +35,7 @@ export const NumberInput = ({
         }}
         placeholder={placeholder}
       />
-      <p>{description}</p>
+      <p className="ml-1 mt-1 text-white/70">{description}</p>
 
       {error && <p>{error.errorMessage}</p>}
     </div>

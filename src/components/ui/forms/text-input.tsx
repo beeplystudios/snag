@@ -20,21 +20,24 @@ export const TextInput = ({
 
   return (
     <div>
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name} className="font-[500]">
+        {label}
+      </label>
       <input
         id={name}
-        className={`w-full rounded-lg bg-bg-300 px-3 py-[10px] outline-none ${
+        className={`w-full rounded-lg bg-bg-100 px-3 py-[10px] outline-none ${
           className ?? ""
         }`}
+        autoComplete="off"
         value={field.value ? field.value : ""}
         onChange={(e) => {
           field.onChange(e.target.value);
         }}
         placeholder={placeholder}
       />
-      <p>{description}</p>
+      <p className="ml-1 mt-1 text-white/70">{description}</p>
 
-      {error && <p>{error.errorMessage}</p>}
+      {error && <p className="text-rose-500">{error.errorMessage}</p>}
     </div>
   );
 };
