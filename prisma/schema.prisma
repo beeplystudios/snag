@@ -18,8 +18,23 @@ model Goal {
   frequency   Int?
   completedAt DateTime?
 
+  messages GoalMessage[]
+
   @@unique([id, authorId])
   @@index([authorId])
+}
+
+model GoalMessage {
+  id       String @id @default(cuid())
+  message  String
+  goalId   String
+  goal     Goal   @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  senderId String
+  sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  points   Int
+
+  @@index([goalId])
+  @@index([senderId])
 }
 
 // Necessary for Next auth
@@ -63,6 +78,7 @@ model User {
     goals         Goal[]
     slug          String    @unique
     points        Int       @default(500)
+    messages      GoalMessage[]
 }
 
 model VerificationToken {

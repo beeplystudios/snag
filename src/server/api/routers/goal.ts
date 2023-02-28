@@ -1,6 +1,7 @@
 import { createGoalSchema } from "@/shared/schemas";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { z } from "zod";
+import { TRPCError } from "@trpc/server";
 
 export const goalRouter = createTRPCRouter({
   getAll: protectedProcedure
@@ -98,6 +99,51 @@ export const goalRouter = createTRPCRouter({
           where: { id: ctx.session.user.id },
           data: {
             points: { decrement: 1 },
+          },
+        }),
+      ]);
+    }),
+
+  motivate: protectedProcedure
+    .input(
+      z.object({
+        goalId: z.string(),
+        message: z.string(),
+        points: z.number().min(1).max(100),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const goal = await ctx.prisma.goal.findUnique({
+        where: {
+          id: input.goalId,
+        },
+      });
+
+      if (!goal) throw new TRPCError({ code: "NOT_FOUND" });
+
+      await ctx.prisma.$transaction([
+        // remove the points from the current user
+        ctx.prisma.user.update({
+          where: { id: ctx.session.user.id },
+          data: {
+            points: { decrement: input.points },
+          },
+        }),
+        // add the points to the goal author
+        ctx.prisma.user.update({
+          where: { id: goal.authorId },
+
+          data: {
+            points: { increment: input.points },
+          },
+        }),
+        // send a message
+        ctx.prisma.goalMessage.create({
+          data: {
+            message: input.message,
+            points: input.points,
+            goalId: input.goalId,
+            senderId: ctx.session.user.id,
           },
         }),
       ]);
