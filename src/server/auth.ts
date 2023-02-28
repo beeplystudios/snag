@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
 import { type GetServerSidePropsContext } from "next";
 import {
   getServerSession,
@@ -8,27 +10,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
-
-/**
- * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
- * object and keep type safety.
- *
- * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
- */
-declare module "next-auth" {
-  interface Session extends DefaultSession {
-    user: {
-      id: string;
-      // ...other properties
-      // role: UserRole;
-    } & DefaultSession["user"];
-  }
-
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
-}
+import { customSlugify } from "@/utils/customSlugify";
 
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
@@ -40,6 +22,7 @@ export const authOptions: NextAuthOptions = {
     session({ session, user }) {
       if (session.user) {
         session.user.id = user.id;
+        session.user.slug = user.slug;
         // session.user.role = user.role; <-- put other properties on the session here
       }
       return session;
@@ -50,6 +33,36 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
+      profile: async (profile) => {
+        const slug = customSlugify(profile.name as string);
+
+        const hasNameCollision = await prisma.user.findUnique({
+          where: { slug },
+        });
+        let count = 2;
+        // check if a person with the slug already exists
+        if (hasNameCollision) {
+          while (true) {
+            if (
+              !(await prisma.user.findUnique({
+                where: { slug: slug + "-" + count.toString() },
+              }))
+            ) {
+              break;
+            }
+            count++;
+          }
+        }
+
+        return {
+          id: profile.sub as string,
+          name: profile.name as string,
+          email: profile.email as string,
+          slug: hasNameCollision ? slug + "-" + count.toString() : slug,
+          emailVerified: new Date(),
+          points: 500,
+        };
+      },
     }),
     /**
      * ...add more providers here.

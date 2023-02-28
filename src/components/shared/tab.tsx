@@ -17,7 +17,7 @@ const Tab: React.FC<{ name: string; href: string }> = ({ name, href }) => {
         </Link>
       </div>
 
-      {selected && <div className=" h-[2px] w-full rounded bg-text-100" />}
+      {selected && <div className=" bg-text-100 h-[2px] w-full rounded" />}
     </div>
   );
 };
