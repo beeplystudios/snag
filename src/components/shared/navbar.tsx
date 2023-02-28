@@ -11,7 +11,10 @@ const Navbar: React.FC = () => {
   const { data: sessionData } = useSession();
 
   const mainTabs: ITab[] = [
-    { name: "My Profile", href: `/profile/${sessionData?.user.slug ?? ""}` },
+    {
+      name: "My Profile",
+      href: sessionData?.user.slug ? `/profile/${sessionData?.user.slug}` : "/",
+    },
   ];
 
   return (
