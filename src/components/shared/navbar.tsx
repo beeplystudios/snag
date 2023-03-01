@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <div className="flex h-[50px] w-screen items-center justify-between bg-bg-200 px-20 shadow">
+    <div className="flex h-[50px] w-screen items-center justify-between px-20 shadow">
       <Link href="/">
         <Image src="/white-logo.svg" alt="" width={30} height={10} />
       </Link>

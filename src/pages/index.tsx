@@ -1,7 +1,7 @@
-import { CreateGoal } from "@/components/goals/create";
+import { CreateGoal } from "@/components/goals/create-goal";
 import Goal from "@/components/goals/goal";
 import Layout from "@/components/shared/layout";
-import Button from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { api } from "@/utils/api";
 import { type NextPage } from "next";
 import { signIn, useSession } from "next-auth/react";

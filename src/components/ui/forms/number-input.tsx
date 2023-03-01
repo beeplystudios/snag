@@ -1,5 +1,6 @@
 import { useTsController } from "@ts-react/form";
 import clsx from "clsx";
+import { Input } from "./input";
 
 interface NumberInputProps {
   name: string;
@@ -20,28 +21,27 @@ export const NumberInput = ({
   const { field, error } = useTsController<number>();
 
   return (
-    <div className="flex flex-col gap-1">
-      <label htmlFor={name} className="font-[500]">
-        {label}
-      </label>
-      <input
-        id={name}
-        type="number"
-        className={clsx(
-          "w-full rounded-lg bg-bg-100 px-3 py-[10px] outline-none",
-          "focus:ring",
-          className
-        )}
-        value={field.value ? field.value : "0"}
-        onChange={(e) => {
-          if (!isNaN(parseInt(e.target.value)))
-            field.onChange(parseInt(e.target.value));
-        }}
-        placeholder={placeholder}
-      />
-      <p className="ml-1 text-white/70">{description}</p>
-
-      {error && <p>{error.errorMessage}</p>}
+    <div className="flex flex-col gap-2">
+      <div>
+        <label htmlFor={name} className="font-medium">
+          {label}
+        </label>
+        <p className="text-sm text-slate-500">{description}</p>
+      </div>
+      <div>
+        <Input
+          id={name}
+          error={!!error}
+          type="number"
+          value={field.value ?? "0"}
+          onChange={(e) => {
+            if (!isNaN(parseInt(e.target.value)))
+              field.onChange(parseInt(e.target.value));
+          }}
+          placeholder={placeholder}
+        />
+        {error && <p className="text-rose-600">{error.errorMessage}</p>}
+      </div>
     </div>
   );
 };
