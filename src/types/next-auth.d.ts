@@ -1,4 +1,4 @@
-import type { User as PrismaUser, PrinterProfile } from "@prisma/client";
+import type { User as PrismaUser } from "@prisma/client";
 
 /**
  * Module augmentation for `next-auth` types.

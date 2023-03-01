@@ -9,34 +9,34 @@ datasource db {
 }
 
 model Goal {
-  id       String @id @default(cuid())
-  authorId String 
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+    id       String @id @default(cuid())
+    authorId String
+    author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
-  content     String
-  description String?
-  frequency   Int
-  completedAt DateTime?
-  nextTime    DateTime
+    content     String
+    description String?
+    frequency   Int
+    completedAt DateTime?
+    nextTime    DateTime
 
-  messages GoalMessage[]
+    messages GoalMessage[]
 
-  @@unique([id, authorId])
-  @@index([authorId])
+    @@unique([id, authorId])
+    @@index([authorId])
 }
 
 model GoalMessage {
-  id        String   @id @default(cuid())
-  message   String
-  goalId    String
-  goal      Goal     @relation(fields: [goalId], references: [id], onDelete: Cascade)
-  senderId  String
-  sender    User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
-  points    Int
-  createdAt DateTime @default(now())
+    id        String   @id @default(cuid())
+    message   String
+    goalId    String
+    goal      Goal     @relation(fields: [goalId], references: [id], onDelete: Cascade)
+    senderId  String
+    sender    User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+    points    Int
+    createdAt DateTime @default(now())
 
-  @@index([goalId])
-  @@index([senderId])
+    @@index([goalId])
+    @@index([senderId])
 }
 
 // Necessary for Next auth

@@ -94,7 +94,7 @@ const Navbar: React.FC = () => {
                   </PopoverContent>
                 </Popover>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
+              <DropdownMenuItem onClick={() => void signOut({ callbackUrl: "/" })}>
                 Sign out
               </DropdownMenuItem>
             </DropdownMenuContent>
