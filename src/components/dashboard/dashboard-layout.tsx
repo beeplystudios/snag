@@ -46,9 +46,15 @@ export const DashboardLayout: React.FC<React.PropsWithChildren> = (props) => {
       <div className="w-full max-w-6xl">
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-medium">Goals</h1>
+            <div>
+              <h1 className="text-2xl font-semibold">Goals</h1>
+              <p className="text-neutral-600">
+                View and manage all of your goals
+              </p>
+            </div>
             <CreateGoal />
           </div>
+          <hr />
           <div className="flex w-full gap-8">
             <div className="flex-1">
               <QueryCell
@@ -66,7 +72,9 @@ export const DashboardLayout: React.FC<React.PropsWithChildren> = (props) => {
                 )}
               />
             </div>
-            <div className="flex-1">{props.children}</div>
+            <div className="flex-1 rounded-md bg-slate-100 p-8">
+              {props.children}
+            </div>
           </div>
         </div>
       </div>

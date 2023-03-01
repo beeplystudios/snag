@@ -26,19 +26,8 @@ const Home: NextPage = () => {
 
   return (
     <DashboardLayout>
-      {/* <h1>My Goals</h1>
-
-      <p>
-        Points: {session.user.points}, streak: {session.user.streak}
-      </p>
-
-      <CreateGoal />
-
-      {goalsQuery.data?.map((goal, i) => (
-        <Goal goal={goal} key={i} />
-      ))} */}
       <div className="flex flex-1 flex-col items-center justify-center">
-        <h1 className="mt-20 text-2xl font-[700]">Nothing is Selected</h1>
+        <h1 className="text-2xl font-[700]">Nothing is Selected</h1>
         <p>Select a goal to see more.</p>
       </div>
     </DashboardLayout>

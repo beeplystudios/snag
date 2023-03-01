@@ -25,12 +25,12 @@ const Content: React.FC = () => {
   const [checked, setChecked] = useState(goalQuery.data?.completedAt !== null);
   const onComplete = api.goal.complete.useMutation({
     onSuccess() {
-      context.invalidate().catch((e) => console.error(e));
+      context.goal.invalidate().catch((e) => console.error(e));
     },
   });
   const onUnComplete = api.goal.uncomplete.useMutation({
     onSuccess() {
-      context.invalidate().catch((e) => console.error(e));
+      context.goal.invalidate().catch((e) => console.error(e));
     },
   });
 
@@ -67,9 +67,13 @@ const Content: React.FC = () => {
               {!!data.completedAt ? "Uncomplete" : "Complete"}
             </Button>
           </div>
-
+          <hr />
+          <p className="text-xl font-medium">Activity</p>
           {data.messages.map((message) => (
-            <div key={message.id} className="flex items-center gap-2">
+            <div
+              key={message.id}
+              className="flex items-center gap-2 rounded-md bg-slate-200 p-2"
+            >
               <Avatar>
                 <AvatarImage
                   src={message.sender.image || ""}

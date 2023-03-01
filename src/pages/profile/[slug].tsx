@@ -27,17 +27,21 @@ const ProfilePage: React.FC = () => {
 
   return (
     <Layout title={user?.name ?? ""}>
-      <h1 className="my-4 w-full text-center text-3xl font-bold">
-        {user?.name}
-      </h1>
+      <div className="w-full">
+        <h1 className="my-4 w-full text-center text-3xl font-bold">
+          {user?.name}
+        </h1>
 
-      {isMe &&
-        myGoalsQuery.data?.map((goal, i) => <Goal goal={goal} key={i} />)}
+        <div className="flex flex-col gap-2">
+          {isMe &&
+            myGoalsQuery.data?.map((goal, i) => <Goal goal={goal} key={i} />)}
 
-      {!isMe &&
-        userGoalsQuery.data?.map((goal, i) => (
-          <GoalWithMotivate goal={goal} key={i} />
-        ))}
+          {!isMe &&
+            userGoalsQuery.data?.map((goal, i) => (
+              <GoalWithMotivate goal={goal} key={i} />
+            ))}
+        </div>
+      </div>
     </Layout>
   );
 };
