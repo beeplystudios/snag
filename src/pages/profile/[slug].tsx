@@ -32,9 +32,7 @@ const ProfilePage: React.FC = () => {
       </h1>
 
       {isMe &&
-        myGoalsQuery.data?.map((goal, i) => (
-          <Goal goal={goal} key={i} changable={false} />
-        ))}
+        myGoalsQuery.data?.map((goal, i) => <Goal goal={goal} key={i} />)}
 
       {!isMe &&
         userGoalsQuery.data?.map((goal, i) => (
