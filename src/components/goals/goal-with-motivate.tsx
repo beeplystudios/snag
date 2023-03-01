@@ -27,7 +27,7 @@ export const GoalWithMotivate: React.FC<{
   );
 
   return (
-    <div className="w-full border border-bg-200 py-2 px-8">
+    <div className="w-full border border-bg-200 py-2 px-8 rounded-md">
       <h1 className="text-2xl font-bold">{goal.content}</h1>
       <p className="text-white/70">{goal.description}</p>
       <p>
@@ -35,8 +35,6 @@ export const GoalWithMotivate: React.FC<{
       </p>
 
       <hr />
-
-      <p>This is why we use chakra how do i do a modal</p>
 
       <TsForm
         schema={sendMotivationSchema}

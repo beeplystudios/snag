@@ -43,29 +43,31 @@ export const DashboardLayout: React.FC<React.PropsWithChildren> = (props) => {
 
   return (
     <Layout>
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-medium">Goals</h1>
-          <CreateGoal />
-        </div>
-        <div className="flex w-full gap-8">
-          <div className="flex-1">
-            <QueryCell
-              query={goalsQuery}
-              success={({ data }) => (
-                <div className="flex flex-col gap-4">
-                  {data.map((goal) => (
-                    <Goal
-                      goal={goal}
-                      checked={!!goal.completedAt}
-                      key={goal.id}
-                    />
-                  ))}
-                </div>
-              )}
-            />
+      <div className="flex">
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-medium">Goals</h1>
+            <CreateGoal />
           </div>
-          <div className="flex-1">{props.children}</div>
+          <div className="flex w-full gap-8">
+            <div className="flex-1">
+              <QueryCell
+                query={goalsQuery}
+                success={({ data }) => (
+                  <div className="flex flex-col gap-4">
+                    {data.map((goal) => (
+                      <Goal
+                        goal={goal}
+                        checked={!!goal.completedAt}
+                        key={goal.id}
+                      />
+                    ))}
+                  </div>
+                )}
+              />
+            </div>
+            <div className="flex-1">{props.children}</div>
+          </div>
         </div>
       </div>
     </Layout>
