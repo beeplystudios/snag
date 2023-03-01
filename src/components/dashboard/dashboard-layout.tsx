@@ -55,7 +55,11 @@ export const DashboardLayout: React.FC<React.PropsWithChildren> = (props) => {
               success={({ data }) => (
                 <div className="flex flex-col gap-4">
                   {data.map((goal) => (
-                    <Goal goal={goal} key={goal.id} />
+                    <Goal
+                      goal={goal}
+                      checked={!!goal.completedAt}
+                      key={goal.id}
+                    />
                   ))}
                 </div>
               )}

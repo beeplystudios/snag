@@ -1,13 +1,9 @@
 import useWindowSize from "@/utils/use-window-size";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import type { IconType } from "react-icons";
+import type { ITab } from "./navbar";
 
-const Tab: React.FC<{ name: string; href: string; Icon: IconType }> = ({
-  name,
-  href,
-  Icon,
-}) => {
+const Tab: React.FC<ITab> = ({ name, href, OnIcon, OffIcon }) => {
   const router = useRouter();
   const selected = router.pathname === href;
   const { isMobile } = useWindowSize();
@@ -16,12 +12,16 @@ const Tab: React.FC<{ name: string; href: string; Icon: IconType }> = ({
     <div className="flex h-full flex-col ">
       <div
         className={`${
-          selected ? "text-text-100" : "text-text-200"
+          selected ? "font-semibold" : "font-normal"
         } flex h-full flex-1 flex-col justify-center`}
       >
         <Link href={href}>
           {isMobile ? (
-            <Icon className="h-full" />
+            selected ? (
+              <OnIcon />
+            ) : (
+              <OffIcon />
+            )
           ) : (
             <p className="transition hover:-translate-y-0.5">{name}</p>
           )}

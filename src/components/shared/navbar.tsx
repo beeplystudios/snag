@@ -2,16 +2,17 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Tab from "./tab";
 import Link from "next/link";
-import { BsInbox, BsFillGrid3X3GapFill } from "react-icons/bs";
-import { CgProfile } from "react-icons/cg";
+import { BsInbox, BsFillGrid3X3GapFill, BsGrid3X3Gap } from "react-icons/bs";
+import { IoPersonCircleOutline, IoPersonCircle } from "react-icons/io5";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Inbox } from "../goals/inbox";
 import type { IconType } from "react-icons";
 
-interface ITab {
+export interface ITab {
   name: string;
   href: string;
-  Icon: IconType;
+  OnIcon: IconType;
+  OffIcon: IconType;
 }
 
 const Navbar: React.FC = () => {
@@ -21,13 +22,15 @@ const Navbar: React.FC = () => {
     {
       name: "My Profile",
       href: "/",
-      Icon: CgProfile,
+      OnIcon: IoPersonCircle,
+      OffIcon: IoPersonCircleOutline,
     },
     {
       // TODO: better name
       name: "All Goals",
       href: "/all",
-      Icon: BsFillGrid3X3GapFill,
+      OnIcon: BsFillGrid3X3GapFill,
+      OffIcon: BsGrid3X3Gap,
     },
   ];
 

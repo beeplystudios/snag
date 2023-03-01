@@ -10,9 +10,11 @@ import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 const Content: React.FC = () => {
   const router = useRouter();
+  const context = api.useContext();
   const goalQuery = api.goal.get.useQuery(
     {
       id: router.query.id as string,
@@ -21,6 +23,17 @@ const Content: React.FC = () => {
       enabled: !!router.query.id,
     }
   );
+  const [checked, setChecked] = useState(goalQuery.data?.completedAt !== null);
+  const onComplete = api.goal.complete.useMutation({
+    onSuccess() {
+      context.invalidate().catch((e) => console.error(e));
+    },
+  });
+  const onUnComplete = api.goal.uncomplete.useMutation({
+    onSuccess() {
+      context.invalidate().catch((e) => console.error(e));
+    },
+  });
 
   // if(sessionData?.user.id !== goalQuery)
 
@@ -35,19 +48,21 @@ const Content: React.FC = () => {
               <p className="text-slate-600">{data.description}</p>
             </div>
             <Button
-              onClick={(e) => {
-                // setChecked(e.target.checked);
-                // if (e.target.checked) {
-                //   void onComplete.mutateAsync({
-                //     id: goal.id,
-                //     userId: goal.authorId,
-                //   });
-                // } else {
-                //   void onUnComplete.mutateAsync({
-                //     id: goal.id,
-                //     userId: goal.authorId,
-                //   });
-                // }
+              onClick={() => {
+                if (!goalQuery.data) return;
+                const newVal = !checked;
+                setChecked(newVal);
+                if (newVal) {
+                  void onComplete.mutateAsync({
+                    id: goalQuery.data.id,
+                    userId: goalQuery.data.authorId,
+                  });
+                } else {
+                  void onUnComplete.mutateAsync({
+                    id: goalQuery.data.id,
+                    userId: goalQuery.data.authorId,
+                  });
+                }
               }}
             >
               {!!data.completedAt ? "Uncomplete" : "Complete"}
