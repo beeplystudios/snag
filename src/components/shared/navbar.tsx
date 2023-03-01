@@ -30,8 +30,8 @@ const Navbar: React.FC = () => {
   const mainTabs: ITab[] = [
     {
       // TODO: better name
-      name: "All Goals",
-      href: "/all",
+      name: "My Dashboard",
+      href: "/dashboard",
       OnIcon: BsFillGrid3X3GapFill,
       OffIcon: BsGrid3X3Gap,
     },
@@ -85,7 +85,7 @@ const Navbar: React.FC = () => {
             <DropdownMenuContent>
               <DropdownMenuItem asChild>
                 <Link href={`/profile/${session?.user.slug || ""}`}>
-                  Profile
+                  My Profile
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>

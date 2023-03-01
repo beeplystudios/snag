@@ -1,37 +1,43 @@
-import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
-import { Header } from "@/components/shared/header";
-import { Button } from "@/components/ui/button";
-import { type NextPage } from "next";
-import { signIn, useSession } from "next-auth/react";
+import { GoalWithMotivate } from "@/components/goals/goal-with-motivate";
+import Layout from "@/components/shared/layout";
+import { OnBottom } from "@/components/ui/on-bottom";
+import { api } from "@/utils/api";
+import type { NextPage } from "next";
+import { useSession } from "next-auth/react";
 
-const Home: NextPage = () => {
-  const { status } = useSession();
+const Index: NextPage = () => {
+  const session = useSession({ required: true });
+  const allGoalsQuery = api.goal.getAll.useInfiniteQuery(
+    {
+      notBy: session.data?.user.id,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+      enabled: session.status === "authenticated",
+    }
+  );
 
-  if (status !== "authenticated")
-    return (
-      <div className="flex h-screen w-screen items-center justify-center">
-        {status === "loading" && <p>Logging you in..</p>}
-        {status === "unauthenticated" && (
-          <div className="w-96 text-center">
-            <Header title="Sign In" />
-            <h1 className="text-5xl font-bold">SNAG</h1>
-            <p>insert mission here</p>
-            <Button onClick={() => void signIn("google")} className="mt-4 w-32">
-              Sign in
-            </Button>
-          </div>
-        )}
-      </div>
-    );
+  const goals = allGoalsQuery.data?.pages.map((page) => page.goals).flat();
 
   return (
-    <DashboardLayout>
-      <div className="flex flex-1 flex-col items-center justify-center">
-        <h1 className="text-2xl font-[700]">Nothing is Selected</h1>
-        <p>Select a goal to see more.</p>
+    <Layout>
+      <div className="mt-4 flex w-full max-w-6xl flex-col gap-2">
+        <OnBottom onBottom={() => void allGoalsQuery.fetchNextPage()}>
+          <div className="flex flex-col gap-4">
+            {goals?.map((goal) => (
+              <GoalWithMotivate key={goal.id} goal={goal} />
+            ))}
+          </div>
+
+          <p className="mt-3 text-center text-neutral-900/80">
+            {allGoalsQuery.hasNextPage
+              ? "Fetching more goals.."
+              : "No more goals.."}
+          </p>
+        </OnBottom>
       </div>
-    </DashboardLayout>
+    </Layout>
   );
 };
 
-export default Home;
+export default Index;
