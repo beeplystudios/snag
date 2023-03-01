@@ -29,7 +29,7 @@ export const GoalWithMotivate: React.FC<{
       ></div>
       <div className="flex items-center justify-between">
         <div className="ml-2 flex flex-1 flex-col items-start">
-          <div className="flex gap-3">
+          <div className="flex gap-2">
             <Link
               href={`/profile/${goal.author.slug}`}
               className="text-slate-700 underline"
@@ -39,19 +39,25 @@ export const GoalWithMotivate: React.FC<{
               </p>
             </Link>
 
-            {goal.completedAt && (
-              <p className="text-black/70">
-                Completed{" "}
-                {new Intl.DateTimeFormat("en-us", {
-                  month: "short",
-                  day: "numeric",
-                  // year: "numeric",
-                  // hour: "numeric",
-                  // minute: "numeric",
-                  // hour12: true,
-                }).format(goal.completedAt)}
-              </p>
-            )}
+            <p>·</p>
+
+            <p className="text-black/70">
+              {goal.completedAt ? (
+                <>
+                  Completed{" "}
+                  {new Intl.DateTimeFormat("en-us", {
+                    month: "short",
+                    day: "numeric",
+                    // year: "numeric",
+                    // hour: "numeric",
+                    // minute: "numeric",
+                    // hour12: true,
+                  }).format(goal.completedAt)}
+                </>
+              ) : (
+                "Incomplete"
+              )}
+            </p>
           </div>
           <h3 className="text-lg font-medium">{goal.content}</h3>
           <p className="">{goal.description ?? <br />}</p>
