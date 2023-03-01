@@ -27,7 +27,7 @@ const ProfilePage: React.FC = () => {
 
   return (
     <Layout title={user?.name ?? ""}>
-      <div className="w-full">
+      <div className="w-full max-w-6xl">
         <h1 className="my-4 w-full text-center text-3xl font-bold">
           {user?.name}
         </h1>
