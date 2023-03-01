@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { api } from "@/utils/api";
 import useWindowSize from "@/utils/use-window-size";
 import type { NextPage } from "next";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -104,7 +103,6 @@ const Content: React.FC = () => {
 
 const GoalDetails: NextPage = () => {
   const { isMobile, loading } = useWindowSize();
-  const { data: sessionData } = useSession();
 
   if (loading) return null;
 

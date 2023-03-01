@@ -1,17 +1,10 @@
 import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
-import { CreateGoal } from "@/components/goals/create-goal";
-import Goal from "@/components/goals/goal";
-import Layout from "@/components/shared/layout";
 import { Button } from "@/components/ui/button";
-import { api } from "@/utils/api";
 import { type NextPage } from "next";
 import { signIn, useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
-  const { status, data: session } = useSession();
-  const goalsQuery = api.goal.getMine.useQuery(undefined, {
-    enabled: status === "authenticated",
-  });
+  const { status } = useSession();
 
   if (status !== "authenticated")
     return (

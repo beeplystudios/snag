@@ -1,7 +1,6 @@
-import { api, type RouterOutputs } from "@/utils/api";
+import type { RouterOutputs } from "@/utils/api";
 import clsx from "clsx";
 import Link from "next/link";
-import { useState } from "react";
 
 type GoalWithMessages = RouterOutputs["goal"]["getMine"] extends (infer T)[]
   ? T

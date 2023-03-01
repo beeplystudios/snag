@@ -1,8 +1,6 @@
 import { createGoalSchema } from "@/shared/schemas";
 import { api } from "@/utils/api";
-import { useSession } from "next-auth/react";
-import { useState, useCallback } from "react";
-import { z } from "zod";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -13,6 +11,7 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { TsForm } from "../ui/forms/ts-form";
+import type { z } from "zod";
 
 export const CreateGoal: React.FC = () => {
   const createGoal = api.goal.create.useMutation();

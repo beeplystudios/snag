@@ -1,7 +1,7 @@
 import { api } from "@/utils/api";
 import useWindowSize from "@/utils/use-window-size";
 import { useSession } from "next-auth/react";
-import React, { useState } from "react";
+import React from "react";
 import { CreateGoal } from "../goals/create-goal";
 import Goal from "../goals/goal";
 import { QueryCell } from "../shared/base-query-cell";

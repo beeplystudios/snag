@@ -1,5 +1,4 @@
 import { useTsController } from "@ts-react/form";
-import clsx from "clsx";
 import { Input } from "./input";
 
 interface NumberInputProps {
@@ -16,7 +15,6 @@ export const NumberInput = ({
   label,
   placeholder,
   description,
-  className,
 }: NumberInputProps) => {
   const { field, error } = useTsController<number>();
 

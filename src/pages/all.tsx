@@ -1,4 +1,3 @@
-import Goal from "@/components/goals/goal";
 import { GoalWithMotivate } from "@/components/goals/goal-with-motivate";
 import Layout from "@/components/shared/layout";
 import { OnBottom } from "@/components/ui/on-bottom";

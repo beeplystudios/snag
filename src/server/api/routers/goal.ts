@@ -56,7 +56,7 @@ export const goalRouter = createTRPCRouter({
       let nextCursor: typeof input.cursor | undefined = undefined;
       if (goals.length > TAKE) {
         const nextItem = goals.pop();
-        nextCursor = nextItem!.id;
+        nextCursor = nextItem?.id;
       }
 
       return {
