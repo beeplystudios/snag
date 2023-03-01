@@ -1,7 +1,10 @@
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Tab from "./tab";
 import Link from "next/link";
+import { BsInbox } from "react-icons/bs";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Inbox } from "../goals/inbox";
 
 interface ITab {
   name: string;
@@ -9,12 +12,12 @@ interface ITab {
 }
 
 const Navbar: React.FC = () => {
-  const { data: sessionData } = useSession();
+  const { data: session } = useSession();
 
   const mainTabs: ITab[] = [
     {
       name: "My Profile",
-      href: sessionData?.user.slug ? `/profile/${sessionData?.user.slug}` : "/",
+      href: "/",
     },
     {
       // TODO: better name
@@ -33,14 +36,26 @@ const Navbar: React.FC = () => {
         <Tab key={i} {...tab} />
       ))}
 
-      <button
-        className="text-highlight no-underline transition hover:-translate-y-0.5"
-        onClick={
-          sessionData ? () => void signOut() : () => void signIn("google")
-        }
-      >
-        {sessionData ? "Sign out" : "Sign in"}
-      </button>
+      <div className="flex items-center gap-2">
+        <Popover>
+          <PopoverTrigger className="mr-2 rounded p-2 transition-colors hover:bg-gray-200">
+            <BsInbox size={20} />
+          </PopoverTrigger>
+          <PopoverContent className="h-[28rem] w-[32rem]">
+            <Inbox />
+          </PopoverContent>
+        </Popover>
+        <p>{session?.user.name}</p>
+
+        <button
+          className="text-highlight ml-2 rounded bg-red-400 px-2.5 py-1 font-bold text-white no-underline transition hover:scale-105 hover:bg-red-500"
+          onClick={() => {
+            void signOut();
+          }}
+        >
+          Sign out
+        </button>
+      </div>
     </div>
   );
 };
