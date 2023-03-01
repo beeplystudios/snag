@@ -8,6 +8,7 @@ const Layout: React.FC<React.PropsWithChildren<{ title?: string }>> = ({
   children,
 }) => {
   const updateStreak = api.user.checkStreak.useMutation();
+  const uncheckCompleted = api.goal.checkUncompleted.useMutation();
 
   useEffect(() => {
     if (!updateStreak.data && !updateStreak.isLoading) {
@@ -20,7 +21,16 @@ const Layout: React.FC<React.PropsWithChildren<{ title?: string }>> = ({
         })
         .catch(console.error);
     }
-  }, [updateStreak]);
+
+    if (!uncheckCompleted.data && !uncheckCompleted.isLoading) {
+      uncheckCompleted
+        .mutateAsync()
+        .then(({ count }) => {
+          console.log("uncompleted", count);
+        })
+        .catch(console.error);
+    }
+  }, [uncheckCompleted, updateStreak]);
 
   return (
     <div className="text-text-100 flex min-h-screen flex-col items-center">

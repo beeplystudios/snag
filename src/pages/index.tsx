@@ -17,9 +17,12 @@ const Home: NextPage = () => {
       <div className="flex h-screen w-screen items-center justify-center">
         {status === "loading" && <p>Logging you in..</p>}
         {status === "unauthenticated" && (
-          <div>
-            <p>insert landing page here</p>
-            <Button onClick={() => void signIn("google")}>Sign in</Button>
+          <div className="w-96 text-center">
+            <h1 className="text-5xl font-bold">SNAG</h1>
+            <p>insert mission here</p>
+            <Button onClick={() => void signIn("google")} className="mt-4 w-32">
+              Sign in
+            </Button>
           </div>
         )}
       </div>

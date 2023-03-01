@@ -83,6 +83,9 @@ export const goalRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.goal.create({
         data: {
+          nextTime: new Date(
+            Date.now() + 1000 * 60 * 60 * 24 * 7 * input.frequency
+          ),
           content: input.content,
           description: input.description,
           frequency: input.frequency,
@@ -175,4 +178,18 @@ export const goalRouter = createTRPCRouter({
         }),
       ]);
     }),
+
+  checkUncompleted: protectedProcedure.mutation(async ({ ctx }) => {
+    const goals = await ctx.prisma.goal.updateMany({
+      where: {
+        authorId: ctx.session.user.id,
+        nextTime: { lte: new Date() },
+      },
+      data: {
+        completedAt: null,
+      },
+    });
+
+    return goals;
+  }),
 });

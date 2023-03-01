@@ -15,8 +15,9 @@ model Goal {
 
   content     String
   description String?
-  frequency   Int?
+  frequency   Int
   completedAt DateTime?
+  nextTime    DateTime
 
   messages GoalMessage[]
 
