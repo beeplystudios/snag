@@ -19,7 +19,7 @@ export const DashboardLayout: React.FC<React.PropsWithChildren> = (props) => {
   if (isMobile) {
     return (
       <Layout>
-        <div className="flex flex-col gap-4">
+        <div className="flex w-full flex-col gap-4">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-medium">Goals</h1>
             <CreateGoal />
@@ -43,7 +43,7 @@ export const DashboardLayout: React.FC<React.PropsWithChildren> = (props) => {
 
   return (
     <Layout>
-      <div className="flex">
+      <div className="w-full max-w-6xl">
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-medium">Goals</h1>

@@ -23,12 +23,11 @@ const All: NextPage = () => {
     <Layout>
       <div className="mt-4 flex flex-col gap-2">
         <OnBottom onBottom={() => void allGoalsQuery.fetchNextPage()}>
-          <div className="mt-4 flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             {goals?.map((goal) => (
               <GoalWithMotivate key={goal.id} goal={goal} />
             ))}
           </div>
-          
 
           <p className="mt-3 text-center text-neutral-900/80">
             {allGoalsQuery.hasNextPage

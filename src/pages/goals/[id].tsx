@@ -109,7 +109,9 @@ const GoalDetails: NextPage = () => {
   if (isMobile) {
     return (
       <Layout>
-        <Content />
+        <div className="w-full">
+          <Content />
+        </div>
       </Layout>
     );
   }

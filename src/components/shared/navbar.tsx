@@ -7,6 +7,7 @@ import { IoPersonCircleOutline, IoPersonCircle } from "react-icons/io5";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Inbox } from "../goals/inbox";
 import type { IconType } from "react-icons";
+import { Button } from "../ui/button";
 
 export interface ITab {
   name: string;
@@ -20,12 +21,6 @@ const Navbar: React.FC = () => {
 
   const mainTabs: ITab[] = [
     {
-      name: "My Profile",
-      href: "/",
-      OnIcon: IoPersonCircle,
-      OffIcon: IoPersonCircleOutline,
-    },
-    {
       // TODO: better name
       name: "All Goals",
       href: "/all",
@@ -35,34 +30,39 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <div className="flex h-[50px] w-screen items-center justify-between px-8 shadow md:px-20">
-      <Link href="/">
-        <Image src="/logo.svg" alt="" width={30} height={10} />
-      </Link>
+    <div className="flex w-full justify-center shadow-md">
+      <div className="flex w-full max-w-6xl justify-between p-2">
+        <div className="flex items-center gap-4">
+          <Link href="/">
+            <Image src="/logo.svg" alt="" width={30} height={10} />
+          </Link>
 
-      {mainTabs.map((tab, i) => (
-        <Tab key={i} {...tab} />
-      ))}
+          {mainTabs.map((tab, i) => (
+            <Tab key={i} {...tab} />
+          ))}
+        </div>
 
-      <div className="flex items-center gap-2">
-        <Popover>
-          <PopoverTrigger className="mr-2 rounded p-2 transition-colors hover:bg-gray-200">
-            <BsInbox size={20} />
-          </PopoverTrigger>
-          <PopoverContent className="h-[28rem] w-[32rem]">
-            <Inbox />
-          </PopoverContent>
-        </Popover>
-        <p>{session?.user.name}</p>
+        <div className="flex items-center gap-2">
+          <Popover>
+            <PopoverTrigger className="mr-2 rounded p-2 transition-colors hover:bg-gray-200">
+              <BsInbox size={20} />
+            </PopoverTrigger>
+            <PopoverContent className="h-[28rem] w-[32rem]">
+              <Inbox />
+            </PopoverContent>
+          </Popover>
+          <p>{session?.user.name}</p>
 
-        <button
-          className="text-highlight ml-2 rounded bg-red-400 px-2.5 py-1 font-bold text-white no-underline transition hover:scale-105 hover:bg-red-500"
-          onClick={() => {
-            void signOut();
-          }}
-        >
-          Sign out
-        </button>
+          <Button
+            size="sm"
+            className="bg-red-400"
+            onClick={() => {
+              void signOut();
+            }}
+          >
+            Sign out
+          </Button>
+        </div>
       </div>
     </div>
   );

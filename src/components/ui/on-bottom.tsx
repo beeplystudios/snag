@@ -10,7 +10,7 @@ export const OnBottom: React.FC<
   return (
     <div>
       {children}
-      <div ref={ref} className="h-[1px] w-[1px]" />
+      <div ref={ref} className="" />
     </div>
   );
 };

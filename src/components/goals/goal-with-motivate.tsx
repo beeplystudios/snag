@@ -27,7 +27,7 @@ export const GoalWithMotivate: React.FC<{
   );
 
   return (
-    <div className="w-full border border-bg-200 py-2 px-8 rounded-md">
+    <div className="w-full rounded-md border border-bg-200 py-2 px-8">
       <h1 className="text-2xl font-bold">{goal.content}</h1>
       <p className="text-white/70">{goal.description}</p>
       <p>
@@ -47,7 +47,7 @@ export const GoalWithMotivate: React.FC<{
         }}
         onSubmit={onSubmit}
         renderAfter={() => (
-          <Button className="mt-3" disabled={motivate.isLoading}>
+          <Button className="mt-3 w-full" disabled={motivate.isLoading}>
             Motivate
           </Button>
         )}

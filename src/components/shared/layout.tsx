@@ -33,16 +33,15 @@ const Layout: React.FC<React.PropsWithChildren<{ title?: string }>> = ({
   }, [uncheckCompleted, updateStreak]);
 
   return (
-    <div className="text-text-100 flex flex-col items-center m-">
+    <>
       <Header title={title} />
-      <Navbar />
-      <main className="w-screen py-8 px-4 md:px-20">
-        {/* Couldn't make it center, off-center as a style? */}
-        <div className="lg:ml-[10%] lg:mr-[40%]"> 
+      <div className="text-text-100 ">
+        <Navbar />
+        <main className="flex justify-center py-8 px-4 md:px-20">
           {children}
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </>
   );
 };
 
