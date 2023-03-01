@@ -1,7 +1,7 @@
 import { sendMotivationSchema } from "@/shared/schemas";
 import { api } from "@/utils/api";
 import { useState } from "react";
-import { z } from "zod";
+import { type z } from "zod";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { TsForm } from "../ui/forms/ts-form";
-import { GoalWithAuthor } from "./goal-with-motivate";
+import { type GoalWithAuthor } from "./goal-with-motivate";
 
 export const MotivateModal: React.FC<{ goal: GoalWithAuthor }> = (props) => {
   const [buttonConfirmed, setButtonConfirmed] = useState(false);

@@ -1,11 +1,6 @@
-import { sendMotivationSchema } from "@/shared/schemas";
-import { api, type RouterOutputs } from "@/utils/api";
+import { type RouterOutputs } from "@/utils/api";
 import clsx from "clsx";
 import Link from "next/link";
-import { useCallback } from "react";
-import type { z } from "zod";
-import { Button } from "../ui/button";
-import { TsForm } from "../ui/forms/ts-form";
 import { MotivateModal } from "./motivate";
 
 export type GoalWithAuthor = RouterOutputs["goal"]["getAll"] extends {
@@ -34,14 +29,30 @@ export const GoalWithMotivate: React.FC<{
       ></div>
       <div className="flex items-center justify-between">
         <div className="ml-2 flex flex-1 flex-col items-start">
-          <Link
-            href={`/profile/${goal.author.slug}`}
-            className="text-slate-700 underline"
-          >
-            <p>
-              {goal.author.name} ({goal.author.slug})
-            </p>
-          </Link>
+          <div className="flex gap-3">
+            <Link
+              href={`/profile/${goal.author.slug}`}
+              className="text-slate-700 underline"
+            >
+              <p>
+                {goal.author.name} ({goal.author.slug})
+              </p>
+            </Link>
+
+            {goal.completedAt && (
+              <p className="text-black/70">
+                Completed{" "}
+                {new Intl.DateTimeFormat("en-us", {
+                  month: "short",
+                  day: "numeric",
+                  // year: "numeric",
+                  // hour: "numeric",
+                  // minute: "numeric",
+                  // hour12: true,
+                }).format(goal.completedAt)}
+              </p>
+            )}
+          </div>
           <h3 className="text-lg font-medium">{goal.content}</h3>
           <p className="">{goal.description ?? <br />}</p>
         </div>
