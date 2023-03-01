@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 export const Spinner: React.FC = () => (
   <svg
-    className="h-5 w-5 animate-spin text-white"
+    className="h-5 w-5 animate-spin text-black"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
