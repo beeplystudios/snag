@@ -63,7 +63,7 @@ export const CreateGoal: React.FC = () => {
             frequency: {
               label: "Frequency",
               description:
-                "How often do you want to do this (1 = Daily, 7 = Weekly, etc.)?",
+                "How often do you want to be reminded of this goal (1 = Daily, 7 = Weekly, etc.)? Although some goals may be long term, it is good to be reminded of them!",
             },
             description: {
               label: "Description",
