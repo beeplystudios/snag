@@ -4,19 +4,26 @@ import { useState } from "react";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "../ui/dialog";
 import { TsForm } from "../ui/forms/ts-form";
 import { GoalWithAuthor } from "./goal-with-motivate";
 
 export const MotivateModal: React.FC<{ goal: GoalWithAuthor }> = (props) => {
+  const [buttonConfirmed, setButtonConfirmed] = useState(false);
   const motivate = api.goal.motivate.useMutation({
-    // onSuccess() {}
+    onSuccess() {
+      setButtonConfirmed(true);
+
+      setTimeout(() => {
+        setButtonConfirmed(false);
+      }, 2500);
+    },
   });
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,7 +32,10 @@ export const MotivateModal: React.FC<{ goal: GoalWithAuthor }> = (props) => {
       goalId: props.goal.id,
       ...values,
     });
-    setIsOpen(false);
+
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 1000);
   };
 
   return (
@@ -63,7 +73,7 @@ export const MotivateModal: React.FC<{ goal: GoalWithAuthor }> = (props) => {
           onSubmit={(values) => void onSubmit(values)}
           renderAfter={() => (
             <Button className="mt-3 w-full" disabled={motivate.isLoading}>
-              Motivate
+              {buttonConfirmed ? "Motivation Sent!" : "Motivate"}
             </Button>
           )}
         />
