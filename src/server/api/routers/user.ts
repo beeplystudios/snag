@@ -43,7 +43,7 @@ export const userRouter = createTRPCRouter({
           streak: user.streak + 1,
           lastSignOn: new Date(),
           points: {
-            increment: Math.min(user.streak, 20),
+            increment: Math.min(user.streak, 20) + 10,
           },
         },
       });
