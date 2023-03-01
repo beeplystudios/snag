@@ -1,10 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
 import { QueryCell } from "@/components/shared/base-query-cell";
+import Layout from "@/components/shared/layout";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { api } from "@/utils/api";
 import useWindowSize from "@/utils/use-window-size";
 import type { NextPage } from "next";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 
 const Content: React.FC = () => {
@@ -18,6 +22,8 @@ const Content: React.FC = () => {
     }
   );
 
+  // if(sessionData?.user.id !== goalQuery)
+
   return (
     <QueryCell
       query={goalQuery}
@@ -28,16 +34,51 @@ const Content: React.FC = () => {
               <h1 className="text-2xl font-medium">{data.content}</h1>
               <p className="text-slate-600">{data.description}</p>
             </div>
-            <Button>{!!data.completedAt ? "Uncomplete" : "Complete"}</Button>
+            <Button
+              onClick={(e) => {
+                // setChecked(e.target.checked);
+                // if (e.target.checked) {
+                //   void onComplete.mutateAsync({
+                //     id: goal.id,
+                //     userId: goal.authorId,
+                //   });
+                // } else {
+                //   void onUnComplete.mutateAsync({
+                //     id: goal.id,
+                //     userId: goal.authorId,
+                //   });
+                // }
+              }}
+            >
+              {!!data.completedAt ? "Uncomplete" : "Complete"}
+            </Button>
           </div>
 
           {data.messages.map((message) => (
-            <div key={message.id} className="flex">
-              <img
-                src={message.sender.image || ""}
-                alt={message.sender.name || ""}
-              />
+            <div key={message.id} className="flex items-center gap-2">
+              <Avatar>
+                <AvatarImage
+                  src={message.sender.image || ""}
+                  alt={message.sender.name || ""}
+                />
+                <AvatarFallback>
+                  {message.sender.name
+                    ?.split(" ")
+                    .map((word) => word[0])
+                    .join("")
+                    .toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
               <p>{message.message}</p>
+              <div className="flex gap-2">
+                <p className="text-neutral-600">+{message.points}</p>
+                <Image
+                  src="/Snag coin.svg"
+                  width={20}
+                  height={10}
+                  alt="coins"
+                />
+              </div>
             </div>
           ))}
         </div>
@@ -48,11 +89,16 @@ const Content: React.FC = () => {
 
 const GoalDetails: NextPage = () => {
   const { isMobile, loading } = useWindowSize();
+  const { data: sessionData } = useSession();
 
   if (loading) return null;
 
   if (isMobile) {
-    return <Content />;
+    return (
+      <Layout>
+        <Content />
+      </Layout>
+    );
   }
 
   return (

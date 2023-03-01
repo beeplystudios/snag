@@ -2,13 +2,16 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Tab from "./tab";
 import Link from "next/link";
-import { BsInbox } from "react-icons/bs";
+import { BsInbox, BsFillGrid3X3GapFill } from "react-icons/bs";
+import { CgProfile } from "react-icons/cg";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Inbox } from "../goals/inbox";
+import type { IconType } from "react-icons";
 
 interface ITab {
   name: string;
   href: string;
+  Icon: IconType;
 }
 
 const Navbar: React.FC = () => {
@@ -18,16 +21,18 @@ const Navbar: React.FC = () => {
     {
       name: "My Profile",
       href: "/",
+      Icon: CgProfile,
     },
     {
       // TODO: better name
       name: "All Goals",
       href: "/all",
+      Icon: BsFillGrid3X3GapFill,
     },
   ];
 
   return (
-    <div className="flex h-[50px] w-screen items-center justify-between px-20 shadow">
+    <div className="flex h-[50px] w-screen items-center justify-between px-8 shadow md:px-20">
       <Link href="/">
         <Image src="/logo.svg" alt="" width={30} height={10} />
       </Link>
