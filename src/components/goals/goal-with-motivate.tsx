@@ -6,8 +6,9 @@ import { useCallback } from "react";
 import type { z } from "zod";
 import { Button } from "../ui/button";
 import { TsForm } from "../ui/forms/ts-form";
+import { MotivateModal } from "./motivate";
 
-type GoalWithAuthor = RouterOutputs["goal"]["getAll"] extends {
+export type GoalWithAuthor = RouterOutputs["goal"]["getAll"] extends {
   goals: (infer T)[];
 }
   ? T
@@ -56,23 +57,7 @@ export const GoalWithMotivate: React.FC<{
         </Link>
         <h3 className="text-lg font-medium">{goal.content}</h3>
         <p className="">{goal.description ?? <br />}</p>
-        <TsForm
-          schema={sendMotivationSchema}
-          defaultValues={{
-            points: 1,
-          }}
-          props={{
-            message: { label: "Message" },
-            points: { label: "Points" },
-          }}
-          formProps={{ className: "w-full" }}
-          onSubmit={onSubmit}
-          renderAfter={() => (
-            <Button className="mt-3 w-full" disabled={motivate.isLoading}>
-              Motivate
-            </Button>
-          )}
-        />
+        <MotivateModal goal={goal} />
       </div>
     </div>
   );
