@@ -9,7 +9,7 @@ interface ITab {
 }
 
 const Navbar: React.FC = () => {
-  const { data: sessionData } = useSession();
+  const { data: session } = useSession();
 
   const mainTabs: ITab[] = [
     {
@@ -33,14 +33,18 @@ const Navbar: React.FC = () => {
         <Tab key={i} {...tab} />
       ))}
 
-      <button
-        className="text-highlight no-underline transition hover:-translate-y-0.5"
-        onClick={
-          sessionData ? () => void signOut() : () => void signIn("google")
-        }
-      >
-        {sessionData ? "Sign out" : "Sign in"}
-      </button>
+      <div className="flex items-center gap-2">
+        <p>{session?.user.name}</p>
+
+        <button
+          className="text-highlight rounded bg-red-400 px-2.5 py-1 font-bold text-white no-underline transition hover:scale-105 hover:bg-red-500"
+          onClick={() => {
+            void signOut();
+          }}
+        >
+          Sign out
+        </button>
+      </div>
     </div>
   );
 };
