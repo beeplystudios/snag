@@ -1,5 +1,6 @@
 import { api } from "@/utils/api";
 import { OnBottom } from "../ui/on-bottom";
+import Image from "next/image";
 
 export const Inbox: React.FC = () => {
   const messagesQuery = api.user.getMessages.useInfiniteQuery(
@@ -22,7 +23,11 @@ export const Inbox: React.FC = () => {
             className="flex flex-wrap gap-2 border-b border-slate-300 py-2"
           >
             <p>{message.message}</p>
-            <p className="text-neutral-600">{message.points} points</p>
+            <div className="flex gap-2">
+              <p className="text-neutral-600">+{message.points}</p>
+              <Image src="/Snag coin.svg" width={20} height={10} alt="coins" />
+            </div>
+
             <p className="text-neutral-600">{message.sender.name}</p>
           </div>
         ))}
