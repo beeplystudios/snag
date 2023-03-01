@@ -45,6 +45,9 @@ export const goalRouter = createTRPCRouter({
             not: input.notBy ? input.notBy : undefined,
           },
         },
+        orderBy: {
+          completedAt: "asc",
+        },
         include: {
           author: {
             select: {
