@@ -1,5 +1,6 @@
 import { CreateGoal } from "@/components/goals/create-goal";
 import Goal from "@/components/goals/goal";
+import { Inbox } from "@/components/goals/inbox";
 import Layout from "@/components/shared/layout";
 import { Button } from "@/components/ui/button";
 import { api } from "@/utils/api";
@@ -35,6 +36,8 @@ const Home: NextPage = () => {
       <p>
         Points: {session.user.points}, streak: {session.user.streak}
       </p>
+
+      <Inbox />
 
       <CreateGoal />
 

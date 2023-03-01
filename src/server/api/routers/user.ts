@@ -53,4 +53,38 @@ export const userRouter = createTRPCRouter({
       giveStreakPoints,
     };
   }),
+
+  getMessages: protectedProcedure
+    .input(z.object({ cursor: z.string().optional() }))
+    .query(async ({ ctx, input }) => {
+      const TAKE = 20;
+      const user = await ctx.prisma.user.findUnique({
+        where: { id: ctx.session.user.id },
+      });
+
+      if (!user) throw new TRPCError({ code: "NOT_FOUND" });
+
+      const messages = await ctx.prisma.goalMessage.findMany({
+        where: {
+          goal: {
+            authorId: ctx.session.user.id,
+          },
+        },
+        orderBy: { createdAt: "desc" },
+        cursor: input.cursor ? { id: input.cursor } : undefined,
+        take: TAKE + 1,
+      });
+
+      let nextCursor: typeof input.cursor | undefined = undefined;
+      if (messages.length > TAKE) {
+        const nextItem = messages.pop();
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        nextCursor = nextItem!.id;
+      }
+
+      return {
+        messages,
+        nextCursor,
+      };
+    }),
 });

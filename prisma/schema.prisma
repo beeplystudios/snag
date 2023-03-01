@@ -26,13 +26,14 @@ model Goal {
 }
 
 model GoalMessage {
-  id       String @id @default(cuid())
-  message  String
-  goalId   String
-  goal     Goal   @relation(fields: [goalId], references: [id], onDelete: Cascade)
-  senderId String
-  sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)
-  points   Int
+  id        String   @id @default(cuid())
+  message   String
+  goalId    String
+  goal      Goal     @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  senderId  String
+  sender    User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  points    Int
+  createdAt DateTime @default(now())
 
   @@index([goalId])
   @@index([senderId])
