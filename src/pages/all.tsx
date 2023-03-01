@@ -1,6 +1,7 @@
 import Goal from "@/components/goals/goal";
 import { GoalWithMotivate } from "@/components/goals/goal-with-motivate";
 import Layout from "@/components/shared/layout";
+import { OnBottom } from "@/components/ui/on-bottom";
 import { api } from "@/utils/api";
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
@@ -22,9 +23,17 @@ const All: NextPage = () => {
   return (
     <Layout>
       <div className="mt-4 flex flex-col gap-2">
-        {goals?.map((goal) => (
-          <GoalWithMotivate key={goal.id} goal={goal} />
-        ))}
+        <OnBottom onBottom={() => void allGoalsQuery.fetchNextPage()}>
+          {goals?.map((goal) => (
+            <GoalWithMotivate key={goal.id} goal={goal} />
+          ))}
+
+          <p className="mt-3 text-center text-neutral-900/80">
+            {allGoalsQuery.hasNextPage
+              ? "Fetching more goals.."
+              : "No more goals.."}
+          </p>
+        </OnBottom>
       </div>
     </Layout>
   );

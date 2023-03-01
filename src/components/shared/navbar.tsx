@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
   const mainTabs: ITab[] = [
     {
       name: "My Profile",
-      href: sessionData?.user.slug ? `/profile/${sessionData?.user.slug}` : "/",
+      href: "/",
     },
     {
       // TODO: better name
