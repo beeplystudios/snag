@@ -1,6 +1,5 @@
 import { sendMotivationSchema } from "@/shared/schemas";
-import { api, RouterOutputs } from "@/utils/api";
-import type { Goal } from "@prisma/client";
+import { api, type RouterOutputs } from "@/utils/api";
 import { useCallback } from "react";
 import type { z } from "zod";
 import { Button } from "../ui/button";

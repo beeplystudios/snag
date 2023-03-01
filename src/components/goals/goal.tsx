@@ -33,7 +33,7 @@ const Goal: React.FC<{
     >
       <div className="flex flex-1 flex-col items-start">
         <h3 className="text-lg font-bold">{goal.content}</h3>
-        <p className="text-white/80">{goal.description ?? <br />}</p>
+        <p className="text-black/40">{goal.description ?? <br />}</p>
 
         <p className="mt-2">Motivating messages down here</p>
 
@@ -53,7 +53,9 @@ const Goal: React.FC<{
           name={`goalbox-${goal.id}`}
           checked={checked}
           onChange={(e) => {
+            console.log("helloe");
             if (!changable) return;
+            console.log("world");
             setChecked(e.target.checked);
 
             if (e.target.checked) {
