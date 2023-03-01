@@ -3,7 +3,7 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import type { IconType } from "react-icons";
-import { BsFillGrid3X3GapFill, BsGrid3X3Gap } from "react-icons/bs";
+import { BsFillGrid3X3GapFill, BsGrid3X3Gap, BsInbox } from "react-icons/bs";
 import { FaChevronDown } from "react-icons/fa";
 import { Inbox } from "../goals/inbox";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -59,6 +59,15 @@ const Navbar: React.FC = () => {
             <p>·</p>
             <p>{session?.user.streak} day streak</p>
           </div>
+          <Popover>
+            <PopoverTrigger className="flex items-center gap-2 rounded-md px-2 font-medium transition-colors hover:bg-gray-200 ">
+              <BsInbox />
+              Inbox
+            </PopoverTrigger>
+            <PopoverContent className="h-[28rem] w-[32rem]">
+              <Inbox />
+            </PopoverContent>
+          </Popover>
 
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center gap-2">
@@ -87,16 +96,6 @@ const Navbar: React.FC = () => {
                 <Link href={`/profile/${session?.user.slug || ""}`}>
                   My Profile
                 </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Popover>
-                  <PopoverTrigger className="flex w-full items-start rounded  px-2 py-1 font-medium text-slate-600 transition-colors hover:bg-gray-200 ">
-                    Inbox
-                  </PopoverTrigger>
-                  <PopoverContent className="h-[28rem] w-[32rem]">
-                    <Inbox />
-                  </PopoverContent>
-                </Popover>
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => void signOut({ callbackUrl: "/" })}
