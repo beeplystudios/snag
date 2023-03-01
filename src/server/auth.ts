@@ -65,6 +65,8 @@ export const authOptions: NextAuthOptions = {
           slug: hasNameCollision ? slug + "-" + count.toString() : slug,
           emailVerified: new Date(),
           points: 500,
+          streak: 0,
+          lastSignOn: new Date(),
         };
       },
     }),
