@@ -1,3 +1,4 @@
+import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
 import { CreateGoal } from "@/components/goals/create-goal";
 import Goal from "@/components/goals/goal";
 import Layout from "@/components/shared/layout";
@@ -29,8 +30,8 @@ const Home: NextPage = () => {
     );
 
   return (
-    <Layout>
-      <h1>My Goals</h1>
+    <DashboardLayout>
+      {/* <h1>My Goals</h1>
 
       <p>
         Points: {session.user.points}, streak: {session.user.streak}
@@ -40,8 +41,8 @@ const Home: NextPage = () => {
 
       {goalsQuery.data?.map((goal, i) => (
         <Goal goal={goal} key={i} />
-      ))}
-    </Layout>
+      ))} */}
+    </DashboardLayout>
   );
 };
 

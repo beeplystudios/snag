@@ -1,5 +1,6 @@
 import { api, type RouterOutputs } from "@/utils/api";
 import clsx from "clsx";
+import Link from "next/link";
 import { useState } from "react";
 
 type GoalWithMessages = RouterOutputs["goal"]["getMine"] extends (infer T)[]
@@ -24,30 +25,20 @@ const Goal: React.FC<{
   });
 
   return (
-    <div
-      className={`flex w-1/4 items-center justify-evenly rounded border-2 py-2 px-4 ${
-        checked
-          ? "border-green-500 bg-emerald-600/30"
-          : "border-rose-400 bg-rose-600/30"
-      }`}
-    >
-      <div className="flex flex-1 flex-col items-start">
-        <h3 className="text-lg font-bold">{goal.content}</h3>
-        <p className="text-black/40">{goal.description ?? <br />}</p>
-
-        <p className="mt-2">Motivating messages down here</p>
-
-        <div>
-          {goal.messages.length === 0 && <p>None!</p>}
-          {goal.messages.map((message) => (
-            <p key={message.id}>
-              {message.sender.name} said: {message.message}, given:{" "}
-              {message.points}pts
-            </p>
-          ))}
+    <Link href={`/goals/${goal.id}`}>
+      <div
+        className="rounded-md bg-red-200 p-4"
+        // className={`flex w-1/4 items-center justify-evenly rounded border-2 py-2 px-4 ${
+        //   checked
+        //     ? "border-green-500 bg-emerald-600/30"
+        //     : "border-rose-400 bg-rose-600/30"
+        // }`}
+      >
+        <div className="flex flex-1 flex-col items-start">
+          <h3 className="text-lg font-bold">{goal.content}</h3>
+          <p className="text-black/40">{goal.description ?? <br />}</p>
         </div>
-      </div>
-      <label>
+        {/* <label>
         <input
           type="checkbox"
           name={`goalbox-${goal.id}`}
@@ -78,8 +69,9 @@ const Goal: React.FC<{
             checked ? "border-green-500 bg-green-500" : "border-rose-400 "
           )}
         />
-      </label>
-    </div>
+      </label> */}
+      </div>
+    </Link>
   );
 };
 

@@ -4,6 +4,26 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 
 export const goalRouter = createTRPCRouter({
+  get: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.prisma.goal.findUniqueOrThrow({
+        where: {
+          id_authorId: {
+            id: input.id,
+            authorId: ctx.session.user.id,
+          },
+        },
+        include: {
+          messages: {
+            include: {
+              sender: true,
+            },
+          },
+        },
+      });
+    }),
+
   getAll: protectedProcedure
     .input(
       z.object({
