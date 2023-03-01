@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
   return (
     <div className="flex h-[50px] w-screen items-center justify-between px-20 shadow">
       <Link href="/">
-        <Image src="/white-logo.svg" alt="" width={30} height={10} />
+        <Image src="/logo.svg" alt="" width={30} height={10} />
       </Link>
 
       {mainTabs.map((tab, i) => (
