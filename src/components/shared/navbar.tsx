@@ -1,3 +1,4 @@
+import useWindowSize from "@/utils/use-window-size";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,6 +25,7 @@ export interface ITab {
 
 const Navbar: React.FC = () => {
   const { data: session } = useSession();
+  const { isMobile } = useWindowSize();
 
   const mainTabs: ITab[] = [
     {
@@ -73,9 +75,11 @@ const Navbar: React.FC = () => {
                     .toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <p className="font-medium text-neutral-800">
-                {session?.user.name}
-              </p>
+              {!isMobile && (
+                <p className="font-medium text-neutral-800">
+                  {session?.user.name}
+                </p>
+              )}
               <FaChevronDown />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
@@ -94,7 +98,9 @@ const Navbar: React.FC = () => {
                   </PopoverContent>
                 </Popover>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => void signOut({ callbackUrl: "/" })}>
+              <DropdownMenuItem
+                onClick={() => void signOut({ callbackUrl: "/" })}
+              >
                 Sign out
               </DropdownMenuItem>
             </DropdownMenuContent>
