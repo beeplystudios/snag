@@ -26,6 +26,7 @@ export const authOptions: NextAuthOptions = {
         session.user.image = user.image;
         session.user.name = user.name;
         session.user.points = user.points;
+        session.user.streak = user.streak;
         // session.user.role = user.role; <-- put other properties on the session here
       }
       return session;

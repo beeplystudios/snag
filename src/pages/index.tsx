@@ -29,7 +29,9 @@ const Home: NextPage = () => {
     <Layout>
       <h1>My Goals</h1>
 
-      <p>Points: {session.user.points}</p>
+      <p>
+        Points: {session.user.points}, streak: {session.user.streak}
+      </p>
 
       <CreateGoal />
 
