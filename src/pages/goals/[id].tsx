@@ -4,6 +4,14 @@ import { QueryCell } from "@/components/shared/base-query-cell";
 import Layout from "@/components/shared/layout";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { api } from "@/utils/api";
 import useWindowSize from "@/utils/use-window-size";
 import type { NextPage } from "next";
@@ -34,6 +42,10 @@ const Content: React.FC = () => {
     },
   });
 
+  const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
+  const deleteGoal = api.goal.delete.useMutation();
+  const trpcContext = api.useContext();
+
   // if(sessionData?.user.id !== goalQuery)
 
   return (
@@ -46,26 +58,65 @@ const Content: React.FC = () => {
               <h1 className="text-2xl font-medium">{data.content}</h1>
               <p className="text-slate-600">{data.description}</p>
             </div>
-            <Button
-              onClick={() => {
-                if (!goalQuery.data) return;
-                const newVal = !checked;
-                setChecked(newVal);
-                if (newVal) {
-                  void onComplete.mutateAsync({
-                    id: goalQuery.data.id,
-                    userId: goalQuery.data.authorId,
-                  });
-                } else {
-                  void onUnComplete.mutateAsync({
-                    id: goalQuery.data.id,
-                    userId: goalQuery.data.authorId,
-                  });
-                }
-              }}
-            >
-              {!!data.completedAt ? "Uncomplete" : "Complete"}
-            </Button>
+            <div className="flex gap-1">
+              <Button
+                onClick={() => {
+                  if (!goalQuery.data) return;
+                  const newVal = !checked;
+                  setChecked(newVal);
+                  if (newVal) {
+                    void onComplete.mutateAsync({
+                      id: goalQuery.data.id,
+                      userId: goalQuery.data.authorId,
+                    });
+                  } else {
+                    void onUnComplete.mutateAsync({
+                      id: goalQuery.data.id,
+                      userId: goalQuery.data.authorId,
+                    });
+                  }
+                }}
+              >
+                {!!data.completedAt ? "Uncomplete" : "Complete"}
+              </Button>
+
+              <Dialog
+                open={deleteDialogIsOpen}
+                onOpenChange={setDeleteDialogIsOpen}
+              >
+                <DialogTrigger asChild>
+                  <Button>Delete</Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>
+                      Delete goal &quot;{data.content}&quot;?
+                    </DialogTitle>
+                    <DialogDescription>
+                      This action is not reversible.
+                    </DialogDescription>
+                  </DialogHeader>
+
+                  <Button
+                    disabled={deleteGoal.isLoading}
+                    onClick={() => {
+                      deleteGoal
+                        .mutateAsync({
+                          id: data.id,
+                        })
+                        .then(async () => {
+                          setDeleteDialogIsOpen(false);
+                          await trpcContext.goal.getMine.invalidate();
+                          await router.push("/dashboard");
+                        })
+                        .catch(console.error);
+                    }}
+                  >
+                    I am sure
+                  </Button>
+                </DialogContent>
+              </Dialog>
+            </div>
           </div>
           <hr />
           <p className="text-xl font-medium">Activity</p>

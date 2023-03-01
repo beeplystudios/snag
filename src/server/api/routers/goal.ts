@@ -6,8 +6,8 @@ import { TRPCError } from "@trpc/server";
 export const goalRouter = createTRPCRouter({
   get: protectedProcedure
     .input(z.object({ id: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.prisma.goal.findUniqueOrThrow({
+    .query(async ({ ctx, input }) => {
+      const goal = await ctx.prisma.goal.findUnique({
         where: {
           id_authorId: {
             id: input.id,
@@ -22,6 +22,10 @@ export const goalRouter = createTRPCRouter({
           },
         },
       });
+
+      if (!goal) throw new TRPCError({ code: "NOT_FOUND" });
+
+      return goal;
     }),
 
   getAll: protectedProcedure
@@ -216,4 +220,17 @@ export const goalRouter = createTRPCRouter({
 
     return goals;
   }),
+
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.goal.delete({
+        where: {
+          id_authorId: {
+            id: input.id,
+            authorId: ctx.session.user.id,
+          },
+        },
+      });
+    }),
 });
