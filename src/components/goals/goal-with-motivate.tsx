@@ -17,20 +17,6 @@ export type GoalWithAuthor = RouterOutputs["goal"]["getAll"] extends {
 export const GoalWithMotivate: React.FC<{
   goal: GoalWithAuthor;
 }> = ({ goal }) => {
-  const motivate = api.goal.motivate.useMutation({
-    // onSuccess() {}
-  });
-
-  const onSubmit = useCallback(
-    (values: z.infer<typeof sendMotivationSchema>) => {
-      motivate.mutate({
-        goalId: goal.id,
-        ...values,
-      });
-    },
-    [goal, motivate]
-  );
-
   const checked = !!goal.completedAt;
 
   return (

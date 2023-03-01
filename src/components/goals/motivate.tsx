@@ -33,6 +33,9 @@ export const MotivateModal: React.FC<{ goal: GoalWithAuthor }> = (props) => {
       ...values,
     });
 
+    // cause next auth to refetch the points
+    document.dispatchEvent(new Event("visibilitychange"));
+
     setTimeout(() => {
       setIsOpen(false);
     }, 1000);
