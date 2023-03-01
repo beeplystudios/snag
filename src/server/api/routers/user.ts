@@ -70,6 +70,15 @@ export const userRouter = createTRPCRouter({
             authorId: ctx.session.user.id,
           },
         },
+        include: {
+          sender: {
+            select: {
+              id: true,
+              name: true,
+              slug: true,
+            },
+          },
+        },
         orderBy: { createdAt: "desc" },
         cursor: input.cursor ? { id: input.cursor } : undefined,
         take: TAKE + 1,

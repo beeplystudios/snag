@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 hr {
-  @apply my-2 border-0 border-b-2 border-bg-200;
+  @apply my-2 border-0 border-b border-neutral-300;
 }

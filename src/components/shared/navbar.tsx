@@ -2,6 +2,9 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Tab from "./tab";
 import Link from "next/link";
+import { BsInbox } from "react-icons/bs";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Inbox } from "../goals/inbox";
 
 interface ITab {
   name: string;
@@ -34,10 +37,18 @@ const Navbar: React.FC = () => {
       ))}
 
       <div className="flex items-center gap-2">
+        <Popover>
+          <PopoverTrigger className="mr-2 rounded p-2 transition-colors hover:bg-gray-200">
+            <BsInbox size={20} />
+          </PopoverTrigger>
+          <PopoverContent className="h-[28rem] w-[32rem]">
+            <Inbox />
+          </PopoverContent>
+        </Popover>
         <p>{session?.user.name}</p>
 
         <button
-          className="text-highlight rounded bg-red-400 px-2.5 py-1 font-bold text-white no-underline transition hover:scale-105 hover:bg-red-500"
+          className="text-highlight ml-2 rounded bg-red-400 px-2.5 py-1 font-bold text-white no-underline transition hover:scale-105 hover:bg-red-500"
           onClick={() => {
             void signOut();
           }}

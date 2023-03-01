@@ -37,8 +37,6 @@ const Home: NextPage = () => {
         Points: {session.user.points}, streak: {session.user.streak}
       </p>
 
-      <Inbox />
-
       <CreateGoal />
 
       {goalsQuery.data?.map((goal, i) => (
