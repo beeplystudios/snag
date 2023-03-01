@@ -61,6 +61,11 @@ export const DashboardLayout: React.FC<React.PropsWithChildren> = (props) => {
                 query={goalsQuery}
                 success={({ data }) => (
                   <div className="flex flex-col gap-4">
+                    {data.length === 0 && (
+                      <p className="rounded bg-slate-100 p-4 text-center text-lg text-black/70">
+                        There are no goals yet. Set some goals for yourself!
+                      </p>
+                    )}
                     {data.map((goal) => (
                       <Goal
                         goal={goal}
