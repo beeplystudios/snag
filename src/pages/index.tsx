@@ -1,4 +1,5 @@
 import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
+import { Header } from "@/components/shared/header";
 import { Button } from "@/components/ui/button";
 import { type NextPage } from "next";
 import { signIn, useSession } from "next-auth/react";
@@ -12,6 +13,7 @@ const Home: NextPage = () => {
         {status === "loading" && <p>Logging you in..</p>}
         {status === "unauthenticated" && (
           <div className="w-96 text-center">
+            <Header title="Sign In" />
             <h1 className="text-5xl font-bold">SNAG</h1>
             <p>insert mission here</p>
             <Button onClick={() => void signIn("google")} className="mt-4 w-32">
