@@ -3,8 +3,9 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import type { IconType } from "react-icons";
-import { BsFillGrid3X3GapFill, BsGrid3X3Gap, BsInbox } from "react-icons/bs";
+import { BsInbox } from "react-icons/bs";
 import { FaChevronDown } from "react-icons/fa";
+import { RiTodoLine, RiTodoFill } from "react-icons/ri"
 import { Inbox } from "../goals/inbox";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
@@ -32,8 +33,8 @@ const Navbar: React.FC = () => {
       // TODO: better name
       name: "My Dashboard",
       href: "/dashboard",
-      OnIcon: BsFillGrid3X3GapFill,
-      OffIcon: BsGrid3X3Gap,
+      OnIcon: RiTodoFill,
+      OffIcon: RiTodoLine,
     },
   ];
 
@@ -62,7 +63,7 @@ const Navbar: React.FC = () => {
           <Popover>
             <PopoverTrigger className="flex items-center gap-2 rounded-md px-2 font-medium transition-colors hover:bg-gray-200 ">
               <BsInbox />
-              Inbox
+              {!isMobile && "Inbox"}
             </PopoverTrigger>
             <PopoverContent className="h-[28rem] w-[32rem]">
               <Inbox />
